@@ -14,7 +14,7 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 class order(models.Model):
-    order_id = models.AutoField(primary_key=True)
+    order_id = models.AutoField(primary_key=True,max_length=50)
     json_item = models.CharField(max_length=5000)
     fname = models.CharField(max_length=50)
     lname = models.CharField(max_length=50)

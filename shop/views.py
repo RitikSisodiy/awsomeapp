@@ -76,7 +76,7 @@ def checkout(request):
 		#return render(request, 'shop/checkout.html',{'thank':thank,'orderid':id})
 		param_dict = {
             'MID':'bEtzWe72963291709602',
-            'ORDER_ID': str(Order.order_id),
+            'ORDER_ID': str(478997+Order.order_id),
             'TXN_AMOUNT':str(ammount1),
             'CUST_ID': email,
             'INDUSTRY_TYPE_ID':'Retail',
@@ -176,16 +176,16 @@ def hendlerequest(request):
 	verify = Checksum.verify_checksum(response_dict,MERCHANT_KEY,checksum)
 	if verify:
 		if response_dict['RESPCODE'] == '01':
+			response_dict['thank']=True
 			print('order successful')
 		else:
-			try:
-				Order=order.objects.get(order_id=int(response_dict['ORDERID']))
-				update=OrderUpdate.objects.filter(order_id=int(response_dict['ORDERID']))
-				Order.delete()
-				update.delete()
-				print('order unsuccessfull because',response_dict['RESPMSG'])
-			except Exception as e:
-				pass	
+			Order=order.objects.filter(order_id=(int(response_dict['ORDERID'])-478997))
+			print(Order)
+			update=OrderUpdate.objects.filter(order_id=(int(response_dict['ORDERID'])-478997))
+			Order.delete()
+			update.delete()
+			print('order unsuccessfull because',response_dict['RESPMSG'])
+			
 	else:
-		print("order unsuccessful because",response_dict['RESPMSG'])
+		print("order unsuccessful because not verify_checksum",response_dict['RESPMSG'])
 	return render(request,'shop/paymentstatus.html',{'response': response_dict})

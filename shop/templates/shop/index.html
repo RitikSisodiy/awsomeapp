@@ -71,7 +71,7 @@
                   <img src='/media/{{i.image}}' id="imgpr{{i.id}}" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title" id= prodpr{{i.id}} >{{ i.product_name }}</h5>
-                    <p class="card-text">{{ i.desc }}</p>
+                    <p class="card-text">{{ i.desc|slice:":40" }}...</p>
                     <p class="card-text"> RS<label id="ppr{{i.id}}"> {{ i.price }}</label>/-</p>
                     <div class="row">
                       <span class ="divpr" id="divpr{{ i.id }}">   <button style="padding: 6px 4px;" id="pr{{i.id}}" class="btn btn-primary mx-2 cart">Add To Cart</button></span>
